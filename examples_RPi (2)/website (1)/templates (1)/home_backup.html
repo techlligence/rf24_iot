@@ -1,0 +1,52 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	
+
+<script>
+
+$(function(){
+	window.setInterval(function(){
+		loadNewCurrent()
+	}, 1000)
+
+function loadNewCurrent(){
+	$.ajax({
+		url: "/update_current",
+		type: "POST",
+		dataType: "json",
+		success: function(data){
+			$(currentDiv).replaceWith(data)
+		}
+	});
+
+}
+
+});
+</script>
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/homeStyle.css') }}">
+
+
+<h1>Nodes in the system</h1>
+
+<div id="currentDiv">
+	<table class="center">
+		<tr>
+			<th>Node ID</th>
+			<th>Current (mA)</th>
+			<th>Toggle</th>
+		</tr>
+
+		{% for curr in currLevels %}
+		<tr>
+			<td>{{loop.index}}</td> 
+			<td>{{curr}}</td>
+			<td>
+				<form action="{{ url_for('toggle_node', node=loop.index) }}">
+					<button type="submit">Toggle NODE</button>
+				</form>
+			</td>
+		</tr>
+		{% endfor %}
+
+	</table>
+</div>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<p> LOUIS WEBSITE </p>
+		<p id="demo">CLICK ME</p>
+	</body>
+
+<script>
+const fs = require('fs');
+const net = require('net');
+		
+fs.open('currentLevelFIFO', fs.constants.O_RDONLY | fs.constants.O_NONBLOCK, (err, fd) =>{
+	const pipe = new net.Socket({ fd });
+
+	pipe.on('data', (data) => {
+	console.log(data);
+
+	});
+});
+
+</script>
+
+
+
+</html>

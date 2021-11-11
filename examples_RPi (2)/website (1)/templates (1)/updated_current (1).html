@@ -1,0 +1,48 @@
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/homeStyle.css') }}">
+
+<div id="currentDiv">
+	<table class="center">
+		<tr>
+			<th>Node ID</th>
+			<th>Current <br> (A)</th>
+			<th>Power <br> (W)</th>
+			<th>Relay Status</th>
+			<th>Smoke Status</th>
+			<th>Toggle <br> ON/OFF</th>
+		</tr>
+
+		{% for curr in allNodes %}
+		<tr>
+			<td class="node_id">{{curr[0]}}</td> 
+			<td>{{curr[1][:-4]}}</td>
+			<td>{{ '%0.2f' | format(curr[1]|float * 220) }}</td>
+
+			{% if curr[2] == '0' %}
+			<td relay_color='{{curr[2]}}'>ON</td>
+			{% else %}
+			<td relay_color='{{curr[2]}}'>OFF</td>
+			{% endif %}
+
+			{% if curr[3] == '0' %}
+			<td relay_color='{{curr[3]}}'>No Smoke Detected</td>
+			{% else %}
+			<td relay_color='{{curr[3]}}'>Smoke Detected!</td>
+			{% endif %}
+
+			<td class="button_row">
+				<form action="{{ url_for('toggle_node', node=curr[0]) }}">
+
+					{% if curr[2] == '0' %}
+					<button type="submit">ON</button>
+					{% else %}
+					<button type="submit">OFF</button>
+					{% endif %}
+
+				</form>
+				
+			</td>
+		</tr>
+		{% endfor %}
+
+	</table>
+</div>

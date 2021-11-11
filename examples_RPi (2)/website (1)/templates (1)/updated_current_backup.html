@@ -1,0 +1,25 @@
+<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/homeStyle.css') }}">
+
+<div id="currentDiv">
+	<table class="center">
+		<tr>
+			<th>Node ID</th>
+			<th>Current (mA)</th>
+			<th>Toggle</th>
+		</tr>
+
+		{% for curr in currLevels %}
+		<tr>
+			<td>{{loop.index}}</td> 
+			<td>{{curr}}</td>
+			<td>
+				<form action="{{ url_for('toggle_node', node=loop.index) }}">
+					<button type="submit">Toggle NODE</button>
+				</form>
+				
+			</td>
+		</tr>
+		{% endfor %}
+
+	</table>
+</div>
